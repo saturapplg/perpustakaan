@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
-     protected $fillable = [
+    protected $fillable = [
         'title',
         'author',
         'pages',
         'type',
+        'category',
         'ddc_code',
         'location',
         'isbn_issn',
@@ -19,3 +20,4 @@ class Book extends Model
         'pdf_file',
     ];
 }
+

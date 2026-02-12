@@ -18,6 +18,7 @@ return new class extends Migration
                 $table->string('author');
                 $table->integer('pages')->nullable();
                 $table->string('type')->nullable();
+                $table->string('category')->nullable();
                 $table->string('ddc_code')->nullable();
                 $table->string('location')->nullable();
                 $table->string('isbn_issn')->nullable();

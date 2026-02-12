@@ -17,9 +17,9 @@ class BookResource extends Resource
 {
     protected static ?string $model = Book::class;
 
-    protected static ?string $navigationLabel = 'Buku';
-    protected static ?string $pluralModelLabel = 'Buku';
-    protected static ?string $modelLabel = 'Buku';
+    protected static ?string $navigationLabel = 'Bidang Ilmu/Subjek';
+    protected static ?string $pluralModelLabel = 'Bidang Ilmu/Subjek';
+    protected static ?string $modelLabel = 'Bidang Ilmu/Subjek';
 
     protected static ?string $navigationGroup = 'Koleksi';
     protected static ?int $navigationSort = 1;
@@ -39,6 +39,16 @@ class BookResource extends Resource
 
             Forms\Components\TextInput::make('title')->required(),
             Forms\Components\TextInput::make('author')->required(),
+            Forms\Components\Select::make('category')
+                ->label('Kategori Buku')
+                ->options([
+                    'ekobit' => 'Ekonomi,Bisnis & Teknologi',
+                    'buku' => 'Buku Umum',
+                    'biofarmi' => 'Bioteknologi,Farmasi,Mikrobiologi',
+                    'tajabat' => 'Tanaman,Jamu,Obat & Gizi',
+                ])
+                ->searchable()
+                ->required(),
             Forms\Components\TextInput::make('pages')->numeric(),
             Forms\Components\TextInput::make('ddc_code'),
             Forms\Components\TextInput::make('location'),
@@ -74,6 +84,11 @@ class BookResource extends Resource
             Tables\Columns\TextColumn::make('author'),
 
             Tables\Columns\TextColumn::make('ddc_code'),
+              Tables\Columns\TextColumn::make('category')
+                ->label('Kategori')
+                ->badge()
+                ->sortable(),
+
         ])
         ->actions([
             Tables\Actions\EditAction::make(),

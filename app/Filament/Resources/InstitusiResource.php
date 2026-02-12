@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\LaporanResource\Pages;
+use App\Filament\Resources\InstitusiResource\Pages;
 use App\Models\Book;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -13,19 +13,19 @@ use Illuminate\Support\Facades\Storage;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 
-class LaporanResource extends Resource
+class InstitusiResource extends Resource
 {
   protected static ?string $model = Book::class;
 
-    protected static ?string $navigationLabel = 'Laporan & Tugas Akhir';
-    protected static ?string $pluralModelLabel = 'Laporan & Tugas Akhir';
-    protected static ?string $modelLabel = 'Laporan & Tugas Akhir';
+protected static ?string $navigationLabel = 'Institusi / Koleksi Khusus';
+protected static ?string $pluralModelLabel = 'Institusi / Koleksi Khusus';
+protected static ?string $modelLabel = 'Institusi / Koleksi Khusus';
 
-    protected static ?string $navigationGroup = 'Koleksi';
-    protected static ?int $navigationSort = 3;
+protected static ?string $navigationGroup = 'Koleksi';
+protected static ?int $navigationSort = 4;
 
-    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document';
-    protected static ?string $slug = 'laporan';
+protected static ?string $navigationIcon = 'heroicon-o-building-library';
+protected static ?string $slug = 'institusi';
 
 
     public static function form(Form $form): Form
@@ -41,18 +41,10 @@ class LaporanResource extends Resource
             Forms\Components\TextInput::make('title')->required(),
             Forms\Components\TextInput::make('author')->required(),
             Forms\Components\Select::make('category')
-                ->label('Kategori Laporan')
+                ->label('Kategori Buku')
                 ->options([
-                    'skripsi & tesis' => 'Skripsi & Tesis',
-                    'biokimia' => 'Laporan Biokimia',
-                    'ilmu komputer' => 'Laporan Ilmu Komputer',
-                    'informatika' => 'Laporan Informatika',
-                    'kehutanan' => 'Laporan Kehutanan',
-                    'kelautan' => 'Laporan Kelautan',
-                    'kimia' => 'Laporan Kimia',
-                    'pkl' => 'Laporan PKL',
-                    'unpak' => 'Laporan UNPAK',
-                    'pasca sarjana' => 'Pasca Sarjana',
+                    'guru besar' => 'Guru Besar IPB',
+                    'penelitian' => 'Penelitian IPB',
                 ])
                 ->searchable()
                 ->required(),
@@ -74,9 +66,8 @@ class LaporanResource extends Resource
    public static function table(Table $table): Table
 {
     return $table
-        ->modifyQueryUsing(fn ($query) =>
-    $query->where('type', 'laporan')
-)
+      ->modifyQueryUsing(fn ($query) =>
+    $query->where('type', 'institusi'))
 
          ->columns([
            ImageColumn::make('cover')
@@ -92,10 +83,11 @@ class LaporanResource extends Resource
             Tables\Columns\TextColumn::make('author'),
 
             Tables\Columns\TextColumn::make('ddc_code'),
+              Tables\Columns\TextColumn::make('category')
+                ->label('Kategori')
+                ->badge()
+                ->sortable(),
 
-                Tables\Columns\TextColumn::make('category')
-                    ->label('Kategori')
-                    ->badge()
         ])
         ->actions([
             Tables\Actions\EditAction::make(),
@@ -107,9 +99,9 @@ class LaporanResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListLaporans::route('/'),
-            'create' => Pages\CreateLaporan::route('/create'),
-            'edit' => Pages\EditLaporan::route('/{record}/edit'),
+            'index' => Pages\ListInstitusis::route('/'),
+            'create' => Pages\CreateInstitusi::route('/create'),
+            'edit' => Pages\EditInstitusi::route('/{record}/edit'),
         ];
     }
 }

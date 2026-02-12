@@ -17,9 +17,9 @@ class JurnalResource extends Resource
 {
     protected static ?string $model = Book::class;
 
-    protected static ?string $navigationLabel = 'Jurnal';
-    protected static ?string $pluralModelLabel = 'Jurnal';
-    protected static ?string $modelLabel = 'Jurnal';
+    protected static ?string $navigationLabel = 'Jurnal & Majalah';
+    protected static ?string $pluralModelLabel = 'Jurnal & Majalah';
+    protected static ?string $modelLabel = 'Jurnal & Majalah';
 
     protected static ?string $navigationGroup = 'Koleksi';
     protected static ?int $navigationSort = 2;
@@ -41,6 +41,18 @@ class JurnalResource extends Resource
 
             Forms\Components\TextInput::make('title')->required(),
             Forms\Components\TextInput::make('author')->required(),
+            Forms\Components\Select::make('category')
+                ->label('Kategori Jurnal')
+                ->options([
+                    'farmacia' => 'Farmacia',
+                    'halal' => 'Jurnal Halal',
+                    'hayati' => 'Jurnal Hayati',
+                    'sni' => 'Standar Nasional Indonesia',
+                    'majalah' => 'Majalah',
+                ])
+                ->searchable()
+                ->required(),
+
             Forms\Components\TextInput::make('pages')->numeric(),
             Forms\Components\TextInput::make('ddc_code'),
             Forms\Components\TextInput::make('location'),
@@ -77,6 +89,11 @@ class JurnalResource extends Resource
             Tables\Columns\TextColumn::make('author'),
 
             Tables\Columns\TextColumn::make('ddc_code'),
+            Tables\Columns\TextColumn::make('category')
+                ->label('Kategori')
+                ->badge()
+                ->sortable(),
+
         ])
         ->actions([
             Tables\Actions\EditAction::make(),
